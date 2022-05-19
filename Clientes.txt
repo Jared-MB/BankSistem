@@ -1,0 +1,35 @@
+Cliente
+79dc400e-ebca-43c6-818d-0432a3ba2036
+Juan
+Calle 2
+923654321
+email2
+KSMDSD
+Cliente
+a241fc7b-b322-4030-9da5-d2ea2974ba89
+Pedro
+Calle Sur 3
+3037393
+email
+KSMSDLD
+Cliente
+a7dd323d-becf-42f8-9535-546033f810e2
+Jonh
+Calle Norte 2
+413234432
+emailas
+GEAWSDLD
+Cliente
+6daa5177-993b-42ba-ac6b-0081e2116f0a
+Jonh Doe
+Calle Poniente 2
+728234432
+email@al
+SKDMLWSDLD
+Cliente
+186605b3-65e2-4aed-a643-8f8283dad1e5
+Angel Jared Muñoz Baez
+Oriente 2
+93849104
+amunozbaez@gmail.com
+SLK223MD
