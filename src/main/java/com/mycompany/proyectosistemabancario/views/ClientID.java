@@ -2,10 +2,16 @@ package com.mycompany.proyectosistemabancario.views;
 
 
 import com.mycompany.proyectosistemabancario.Cliente;
+import com.mycompany.proyectosistemabancario.CuentaBancaria;
 import com.mycompany.proyectosistemabancario.utils.ClientUtils;
+import com.mycompany.proyectosistemabancario.utils.CuentaUtils;
 import com.mycompany.proyectosistemabancario.views.Clients;
 import java.awt.Color;
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
@@ -19,13 +25,33 @@ import java.io.IOException;
 public class ClientID extends javax.swing.JFrame {
     private int xMouse;
     private int yMouse;
-    private Cliente cliente;
+    private Cliente CLIENTE;
     /**
      * Creates new form ClientID
+     * @throws java.io.IOException
      */
-    public void getClient() throws IOException {
+    private void getClient() throws IOException {
         Cliente cliente = ClientUtils.GetClientByID(Clients.clientID);
-        this.cliente = cliente;
+        this.CLIENTE = cliente;
+        nameInput.setText(cliente.getNombre());
+        direccionInput.setText(cliente.getDireccion());
+        telefonoInput.setText(cliente.getTelefono().toString());
+        emailInput.setText(cliente.getEmail());
+        rfcInput.setText(cliente.getRFC());
+        CuentaBancaria[] cuentas = cliente.getCuentas();
+        DefaultTableModel modelo = new DefaultTableModel();
+        modelo.addColumn("Numero de cuenta");
+        modelo.addColumn("Saldo");
+        for (CuentaBancaria cuenta : cuentas){
+            if (cuenta != null){
+                Object[] data = new Object[]{
+                    cuenta.getNumeroCuenta(),
+                    cuenta.getSaldo()
+                };
+                modelo.addRow(data);
+            }
+        }
+        this.cuentasCliente.setModel(modelo);
     }
     public ClientID() {
         initComponents();
@@ -35,7 +61,6 @@ public class ClientID extends javax.swing.JFrame {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-        id.setText(this.cliente.getNombre());
     }
 
     /**
@@ -50,7 +75,25 @@ public class ClientID extends javax.swing.JFrame {
         Header = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         exitBtn = new javax.swing.JLabel();
-        id = new javax.swing.JLabel();
+        jPanel1 = new javax.swing.JPanel();
+        nameLabel = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        cuentasCliente = new javax.swing.JTable();
+        direccionLabel = new javax.swing.JLabel();
+        cuentasLabel = new javax.swing.JLabel();
+        direccionInput = new javax.swing.JLabel();
+        nameInput = new javax.swing.JLabel();
+        telefonoLabel = new javax.swing.JLabel();
+        telefonoInput = new javax.swing.JLabel();
+        emailLabel = new javax.swing.JLabel();
+        emailInput = new javax.swing.JLabel();
+        rfcLabel = new javax.swing.JLabel();
+        rfcInput = new javax.swing.JLabel();
+        agregarCuentaBtn = new javax.swing.JPanel();
+        jLabel2 = new javax.swing.JLabel();
+        eliminarCuentaBtn = new javax.swing.JPanel();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setLocationByPlatform(true);
@@ -112,32 +155,232 @@ public class ClientID extends javax.swing.JFrame {
                 .addGap(0, 0, Short.MAX_VALUE))
         );
 
-        id.setText("jLabel2");
+        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+
+        nameLabel.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        nameLabel.setForeground(new java.awt.Color(153, 102, 255));
+        nameLabel.setText("Nombre");
+
+        cuentasCliente.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane1.setViewportView(cuentasCliente);
+
+        direccionLabel.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        direccionLabel.setForeground(new java.awt.Color(153, 102, 255));
+        direccionLabel.setText("Direccion");
+
+        cuentasLabel.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        cuentasLabel.setForeground(new java.awt.Color(153, 102, 255));
+        cuentasLabel.setText("Cuentas Bancarias");
+
+        direccionInput.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        direccionInput.setText("jLabel4");
+
+        nameInput.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        nameInput.setText("jLabel5");
+
+        telefonoLabel.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        telefonoLabel.setForeground(new java.awt.Color(153, 102, 255));
+        telefonoLabel.setText("Telefono");
+
+        telefonoInput.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        telefonoInput.setText("jLabel3");
+
+        emailLabel.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        emailLabel.setForeground(new java.awt.Color(153, 102, 255));
+        emailLabel.setText("E-mail");
+
+        emailInput.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        emailInput.setText("jLabel3");
+
+        rfcLabel.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        rfcLabel.setForeground(new java.awt.Color(153, 102, 255));
+        rfcLabel.setText("RFC");
+
+        rfcInput.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        rfcInput.setText("jLabel2");
+
+        agregarCuentaBtn.setBackground(new java.awt.Color(255, 255, 255));
+        agregarCuentaBtn.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 102, 255)));
+        agregarCuentaBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        agregarCuentaBtn.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                agregarCuentaBtnMouseClicked(evt);
+            }
+        });
+
+        jLabel2.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel2.setForeground(new java.awt.Color(153, 102, 255));
+        jLabel2.setText("Agregar cuenta");
+
+        javax.swing.GroupLayout agregarCuentaBtnLayout = new javax.swing.GroupLayout(agregarCuentaBtn);
+        agregarCuentaBtn.setLayout(agregarCuentaBtnLayout);
+        agregarCuentaBtnLayout.setHorizontalGroup(
+            agregarCuentaBtnLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, agregarCuentaBtnLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel2)
+                .addContainerGap())
+        );
+        agregarCuentaBtnLayout.setVerticalGroup(
+            agregarCuentaBtnLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, agregarCuentaBtnLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel2)
+                .addContainerGap())
+        );
+
+        eliminarCuentaBtn.setBackground(new java.awt.Color(255, 255, 255));
+        eliminarCuentaBtn.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 102, 255)));
+        eliminarCuentaBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        eliminarCuentaBtn.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                eliminarCuentaBtnMouseClicked(evt);
+            }
+        });
+
+        jLabel4.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel4.setForeground(new java.awt.Color(153, 102, 255));
+        jLabel4.setText("Eliminar Cuenta");
+
+        javax.swing.GroupLayout eliminarCuentaBtnLayout = new javax.swing.GroupLayout(eliminarCuentaBtn);
+        eliminarCuentaBtn.setLayout(eliminarCuentaBtnLayout);
+        eliminarCuentaBtnLayout.setHorizontalGroup(
+            eliminarCuentaBtnLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, eliminarCuentaBtnLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel4)
+                .addContainerGap())
+        );
+        eliminarCuentaBtnLayout.setVerticalGroup(
+            eliminarCuentaBtnLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, eliminarCuentaBtnLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel4)
+                .addContainerGap())
+        );
+
+        jLabel5.setForeground(new java.awt.Color(153, 102, 255));
+        jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel5.setText("Editar");
+        jLabel5.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 102, 255)));
+        jLabel5.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jLabel5.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel5MouseClicked(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollPane1)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                                .addComponent(nameLabel)
+                                .addGap(203, 203, 203)
+                                .addComponent(emailLabel))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(nameInput)
+                                    .addComponent(direccionLabel))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(rfcLabel)
+                                    .addComponent(emailInput)
+                                    .addComponent(rfcInput))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap())
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(cuentasLabel)
+                                .addGap(234, 234, 234)
+                                .addComponent(agregarCuentaBtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(eliminarCuentaBtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(direccionInput)
+                            .addComponent(telefonoLabel)
+                            .addComponent(telefonoInput))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(nameLabel)
+                        .addComponent(emailLabel))
+                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(nameInput)
+                    .addComponent(emailInput))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(direccionLabel)
+                    .addComponent(rfcLabel))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(direccionInput)
+                    .addComponent(rfcInput))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(telefonoLabel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(telefonoInput)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(cuentasLabel)
+                            .addComponent(agregarCuentaBtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(eliminarCuentaBtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(Header, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(209, 209, 209)
-                .addComponent(id)
-                .addContainerGap(258, Short.MAX_VALUE))
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(Header, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(38, 38, 38)
-                .addComponent(id)
-                .addGap(0, 96, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void exitBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_exitBtnMouseClicked
-        this.dispose();
+        try {
+            new Clients().setVisible(true);
+            this.dispose();
+        } catch (IOException ex) {
+            Logger.getLogger(ClientID.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_exitBtnMouseClicked
 
     private void exitBtnMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_exitBtnMouseEntered
@@ -158,6 +401,39 @@ public class ClientID extends javax.swing.JFrame {
         xMouse = evt.getX();
         yMouse = evt.getY();
     }//GEN-LAST:event_HeaderMousePressed
+
+    private void agregarCuentaBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_agregarCuentaBtnMouseClicked
+        try {
+            // TODO add your handling code here:
+            this.CLIENTE.addCuentaBancaria();
+            getClient();
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, ex.getMessage());
+        }
+    }//GEN-LAST:event_agregarCuentaBtnMouseClicked
+
+    private void eliminarCuentaBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_eliminarCuentaBtnMouseClicked
+        // TODO add your handling code here:
+        int row = cuentasCliente.getSelectedRow();
+        if (row == -1) JOptionPane.showMessageDialog(null, "Seleccione una fila");
+        else {
+            int confirm = JOptionPane.showConfirmDialog(null, "Esta a punto de eliminar la cuenta" + cuentasCliente.getValueAt(row, 0).toString() + ", ¿desea continuar?");
+            if (confirm == 0){
+                try {
+                    CuentaUtils.RemoveCuenta(Long.parseLong(cuentasCliente.getValueAt(row, 0).toString()));
+                    getClient();
+                } catch (IOException ex) {
+                    JOptionPane.showMessageDialog(null, "Error al eliminar la cuenta");
+                }
+            }
+        }
+    }//GEN-LAST:event_eliminarCuentaBtnMouseClicked
+
+    private void jLabel5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel5MouseClicked
+        // TODO add your handling code here:
+        new EditClientForm().setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jLabel5MouseClicked
 
     /**
      * @param args the command line arguments
@@ -196,8 +472,26 @@ public class ClientID extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel Header;
+    private javax.swing.JPanel agregarCuentaBtn;
+    private javax.swing.JTable cuentasCliente;
+    private javax.swing.JLabel cuentasLabel;
+    private javax.swing.JLabel direccionInput;
+    private javax.swing.JLabel direccionLabel;
+    private javax.swing.JPanel eliminarCuentaBtn;
+    private javax.swing.JLabel emailInput;
+    private javax.swing.JLabel emailLabel;
     private javax.swing.JLabel exitBtn;
-    private javax.swing.JLabel id;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel nameInput;
+    private javax.swing.JLabel nameLabel;
+    private javax.swing.JLabel rfcInput;
+    private javax.swing.JLabel rfcLabel;
+    private javax.swing.JLabel telefonoInput;
+    private javax.swing.JLabel telefonoLabel;
     // End of variables declaration//GEN-END:variables
 }

@@ -1,6 +1,9 @@
 package com.mycompany.proyectosistemabancario.empleados;
 
 import javax.swing.JOptionPane;
+
+import com.mycompany.proyectosistemabancario.CuentaBancaria;
+
 import java.time.LocalDate;
 import java.util.UUID;
 
@@ -8,46 +11,46 @@ public class Empleado {
     // ATTRIBUTES
     private String nombre;
     private String rfc;
-    private String NSS;
-    private LocalDate fechaContratacion;
     private String ID;
+    private String telefono;
+    private String direccion;
     // CONSTRUCTOR
-    public Empleado(String nombre, String rfc, String NSS) {
+    public Empleado(String nombre, String rfc, String telefono, String direccion) {
         this.ID = UUID.randomUUID().toString();
         this.nombre = nombre;
         this.rfc = rfc;
-        this.NSS = NSS;
-        this.fechaContratacion = LocalDate.now();
+        this.telefono = telefono;
+        this.direccion = direccion;
+    }
+    public Empleado(String ID, String nombre, String rfc, String telefono, String direccion) {
+        this.ID = ID;
+        this.nombre = nombre;
+        this.rfc = rfc;
+        this.telefono = telefono;
+        this.direccion = direccion;
     }
     // METHODS
     public String getID(){
         return this.ID;
+    }
+    public String getTelefono() {
+        return telefono;
+    }
+    public String getDireccion() {
+        return direccion;
     }
     //
     public String getNombre() {
         return nombre;
     }
     // 
-    public String getNSS(){
-        return NSS;
-    }
-    // 
-    public LocalDate getFechaContratacion() {
-        return fechaContratacion;
-    }
-    // 
     public String getRFC() {
         return rfc;
     }
-    // 
-    public void setNSS(String NSS) {
-        if (NSS != ""){
-            this.NSS = NSS;
-        } 
-        else {
-            JOptionPane.showMessageDialog(null, "El NSS no es un valor aceptable");
-        }
+    public void addCuenta(){
+        
     }
+    // 
     //  
     public void setNombre(String nombre) {
         if (nombre != ""){

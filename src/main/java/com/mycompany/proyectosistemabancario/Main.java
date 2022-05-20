@@ -9,7 +9,7 @@ import com.mycompany.proyectosistemabancario.views.Clients;
 import java.awt.Color;
 
 import com.mycompany.proyectosistemabancario.views.Employees;
-import com.mycompany.proyectosistemabancario.views.Sucursales;
+import com.mycompany.proyectosistemabancario.views.Sucursal;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -119,7 +119,7 @@ public class Main extends javax.swing.JFrame {
         sucursalBtnLabel.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         sucursalBtnLabel.setForeground(new java.awt.Color(153, 102, 255));
         sucursalBtnLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        sucursalBtnLabel.setText("Sucursales");
+        sucursalBtnLabel.setText("Sucursal");
         sucursalBtnLabel.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         sucursalBtnLabel.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -276,7 +276,7 @@ public class Main extends javax.swing.JFrame {
     }//GEN-LAST:event_sucursalBtnLabelMouseExited
 
     private void sucursalBtnLabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_sucursalBtnLabelMouseClicked
-        new Sucursales().setVisible(true);
+        new Sucursal().setVisible(true);
         this.dispose();
     }//GEN-LAST:event_sucursalBtnLabelMouseClicked
 

@@ -315,7 +315,7 @@ public class AddClientFrame extends javax.swing.JFrame {
         } else {
             try {
                 Cliente client = new Cliente(name, direccion, Long.parseLong(telefono), email, rfc);
-                ClientUtils.SaveClient(client);
+                ClientUtils.SaveClient(client, "Clientes.txt");
                 JOptionPane.showMessageDialog(null, "Cliente agregado");
                 new Clients().setVisible(true);
                 this.dispose();

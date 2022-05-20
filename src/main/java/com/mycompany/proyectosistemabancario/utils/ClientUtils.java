@@ -14,6 +14,38 @@ import com.mycompany.proyectosistemabancario.CuentaBancaria;
  * @author amuno
  */
 public class ClientUtils {
+	public static void UpdateClient(Cliente clienteParam) throws IOException{
+		Cliente[] clients = GetClients();
+		FileWriter fw = new FileWriter("Clientes.txt");
+		BufferedWriter bw = new BufferedWriter(fw);
+		for (int i = 0; i < clients.length; i++){
+			if (clients[i] != null){
+				if (clients[i].getID().equals(clienteParam.getID())){
+					clients[i] = clienteParam;
+					break;
+				}
+			}
+		}
+		for(int i = 0; i < clients.length; i++){
+			if (clients[i] != null){
+				bw.write("Cliente");
+				bw.newLine();
+				bw.write(clients[i].getID());
+				bw.newLine();
+				bw.write(clients[i].getNombre());
+				bw.newLine();
+				bw.write(clients[i].getDireccion());
+				bw.newLine();
+				bw.write(clients[i].getTelefono().toString());
+				bw.newLine();
+				bw.write(clients[i].getEmail());
+				bw.newLine();
+				bw.write(clients[i].getRFC());
+				bw.newLine();
+			}
+		}
+		bw.close();
+	}
 	public static Cliente GetClientByID(String ID) throws IOException {
 		Cliente cliente = null;
 		FileReader fr = new FileReader("Clientes.txt");
@@ -35,7 +67,8 @@ public class ClientUtils {
 				String email = line;
 				line = br.readLine();
 				String RFC = line;
-				cliente = new Cliente(ID, nombre, direccion, Long.parseLong(telefono), email, RFC);
+                                CuentaBancaria[] cuentas = CuentaUtils.GetCuentasClient(ID);
+				cliente = new Cliente(ID, nombre, direccion, Long.parseLong(telefono), email, RFC, cuentas);
 				finish = true;
 			}
 		}
@@ -81,9 +114,41 @@ public class ClientUtils {
 		br.close();
 		return clients;
 	}
-	public static void SaveClient(Cliente cliente) throws IOException {
+	public static void RemoveClient(String ID) throws IOException {
 		Cliente[] cacheClients = GetClients();
-		FileWriter file = new FileWriter("Clientes.txt");
+		FileWriter fw = new FileWriter("Clientes.txt");
+		BufferedWriter bw = new BufferedWriter(fw);
+		CuentaBancaria[] cuentas = CuentaUtils.GetCuentasClient(ID);
+		for (int i = 0; i < cuentas.length; i++){
+			if (cuentas[i] != null){
+				CuentaUtils.RemoveCuenta(cuentas[i].getNumeroCuenta());
+			}
+		}
+		for(int i = 0; i < cacheClients.length; i++){
+			if (cacheClients[i] != null){
+				if(!cacheClients[i].getID().equals(ID)){
+					bw.write("Cliente");
+					bw.newLine();
+					bw.write(cacheClients[i].getID());
+					bw.newLine();
+					bw.write(cacheClients[i].getNombre());
+					bw.newLine();
+					bw.write(cacheClients[i].getDireccion());
+					bw.newLine();
+					bw.write(cacheClients[i].getTelefono().toString());
+					bw.newLine();
+					bw.write(cacheClients[i].getEmail());
+					bw.newLine();
+					bw.write(cacheClients[i].getRFC());
+					bw.newLine();
+				}
+			}
+		}
+		bw.close();
+	}
+	public static void SaveClient(Cliente cliente, String File) throws IOException {
+		Cliente[] cacheClients = GetClients();
+		FileWriter file = new FileWriter(File);
 		BufferedWriter bw = new BufferedWriter(file);
 		boolean finish = false;
 		int index = 0;

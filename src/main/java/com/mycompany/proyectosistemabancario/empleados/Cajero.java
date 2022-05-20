@@ -7,8 +7,13 @@ public class Cajero extends Empleado {
     private Integer horas;
     private Float sueldo;
     // CONSTRUCTOR
-    public Cajero(String nombre, String rfc, Float sueldo, String NSS, Integer horas){
-        super(nombre, rfc, NSS);
+    public Cajero(String nombre, String rfc, String telefono, String direccion, Float sueldo, Integer horas){
+        super(nombre, rfc, telefono, direccion);
+        this.horas = horas;
+        this.sueldo = sueldo;
+    }
+    public Cajero(String ID,String nombre, String rfc, String telefono, String direccion, Float sueldo, Integer horas){
+        super(ID,nombre, rfc, telefono, direccion);
         this.horas = horas;
         this.sueldo = sueldo;
     }

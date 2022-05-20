@@ -5,8 +5,33 @@ import com.mycompany.proyectosistemabancario.CuentaBancaria;
 import java.io.*;	
 
 public class CuentaUtils {
+	public static void UpdateCuenta(CuentaBancaria cuenta) throws IOException {
+		CuentaBancaria[] cuentas = GetCuentas();
+		for (int i = 0; i < cuentas.length; i++) {
+			if (cuentas[i] != null && cuentas[i].getNumeroCuenta().equals(cuenta.getNumeroCuenta())) {
+				cuentas[i] = cuenta;
+				break;
+			}
+		}
+		FileWriter fw = new FileWriter("Cuentas.txt");
+		BufferedWriter bw = new BufferedWriter(fw);
+		for(int i = 0; i < cuentas.length; i++){
+			if(cuentas[i] != null){
+				bw.write("Cuenta");
+				bw.newLine();
+				bw.write(cuentas[i].getClientID());
+				bw.newLine();
+				bw.write(cuentas[i].getNumeroCuenta().toString());
+				bw.newLine();
+				bw.write(cuentas[i].getSaldo().toString());
+				bw.newLine();
+			}
+			else break;
+		}
+		bw.close();
+	}
 	public static CuentaBancaria[] GetCuentas() throws IOException{
-		CuentaBancaria[] cacheCuentas = new CuentaBancaria[50];
+		CuentaBancaria[] cacheCuentas = new CuentaBancaria[100];
 		FileReader fr = new FileReader("Cuentas.txt");
 		BufferedReader br = new BufferedReader(fr);
 		String line;

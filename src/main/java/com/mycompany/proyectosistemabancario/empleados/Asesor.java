@@ -10,8 +10,12 @@ public class Asesor extends Empleado {
     private Float sueldo;
     private String clientes[] = new String[10];
     //CONSTRUCTOR
-    public Asesor (String nombre, String rfc, Float sueldo, String NSS){
-        super(nombre, rfc, NSS);
+    public Asesor (String nombre, String rfc, String telefono, String direccion,  Float sueldo){
+        super(nombre, rfc, telefono, direccion);
+        this.sueldo = sueldo;
+    }
+    public Asesor (String ID, String nombre, String rfc, String telefono, String direccion,  Float sueldo){
+        super(ID, nombre, rfc, telefono, direccion);
         this.sueldo = sueldo;
     }
 	// METHODS

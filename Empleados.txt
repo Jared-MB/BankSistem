@@ -1,0 +1,17 @@
+Empleado
+86dfc723-0658-43a6-b8cc-20c636a74ae7
+Jared
+IN3DLK
+93492039
+Norte 4
+Cajero
+8
+7000.0
+Empleado
+3bc6f21a-26cb-4945-8b3b-14e886d5b3a4
+Angel
+K3OLAD
+09324453
+Poniente 2
+Asesor
+10000.0

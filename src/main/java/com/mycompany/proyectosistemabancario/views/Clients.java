@@ -24,11 +24,12 @@ public class Clients extends javax.swing.JFrame {
 
     private int xMouse;
     private int yMouse;
-    private DefaultTableModel modelo = new DefaultTableModel();
+    
     public static String clientID;
     
-    public void CargarDatos() throws IOException {
+    private void CargarDatos() throws IOException {
         Cliente[] cacheClient = ClientUtils.GetClients(); 
+        DefaultTableModel modelo = new DefaultTableModel();
         modelo.addColumn("ID");
         modelo.addColumn("Nombre");
         modelo.addColumn("Direccion");
@@ -50,6 +51,7 @@ public class Clients extends javax.swing.JFrame {
     }
     /**
      * Creates new form Employees
+     * @throws java.io.IOException
      */
     public Clients() throws IOException {
         initComponents();
@@ -74,6 +76,7 @@ public class Clients extends javax.swing.JFrame {
         tablaClientes = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
         addClientBtn = new javax.swing.JLabel();
+        eliminarClienteBtn = new javax.swing.JLabel();
         Header1 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         exitBtn = new javax.swing.JLabel();
@@ -131,11 +134,24 @@ public class Clients extends javax.swing.JFrame {
         addClientBtn.setForeground(new java.awt.Color(153, 102, 255));
         addClientBtn.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         addClientBtn.setText("Agregar Cliente");
-        addClientBtn.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 102, 255)));
+        addClientBtn.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(153, 102, 255), 1, true));
         addClientBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         addClientBtn.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 addClientBtnMouseClicked(evt);
+            }
+        });
+
+        eliminarClienteBtn.setBackground(new java.awt.Color(153, 102, 255));
+        eliminarClienteBtn.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        eliminarClienteBtn.setForeground(new java.awt.Color(153, 102, 255));
+        eliminarClienteBtn.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        eliminarClienteBtn.setText("Eliminar Cliente");
+        eliminarClienteBtn.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(153, 102, 255), 1, true));
+        eliminarClienteBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        eliminarClienteBtn.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                eliminarClienteBtnMouseClicked(evt);
             }
         });
 
@@ -147,9 +163,11 @@ public class Clients extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(addClientBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(addClientBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(eliminarClienteBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
             .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 838, Short.MAX_VALUE)
         );
@@ -157,12 +175,14 @@ public class Clients extends javax.swing.JFrame {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jLabel2)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(addClientBtn))
+                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(eliminarClienteBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(addClientBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(9, 9, 9)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 422, Short.MAX_VALUE))
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 414, Short.MAX_VALUE))
         );
 
         Header1.setBackground(new java.awt.Color(255, 255, 255));
@@ -277,6 +297,7 @@ public class Clients extends javax.swing.JFrame {
         if (row != -1) {
             clientID = tablaClientes.getValueAt(row, 0).toString();
             new ClientID().setVisible(true);
+            this.dispose();
         }
         else JOptionPane.showMessageDialog(null, "Seleccione una fila");
     }//GEN-LAST:event_jLabel1MouseClicked
@@ -286,6 +307,23 @@ public class Clients extends javax.swing.JFrame {
         new AddClientFrame().setVisible(true);
         this.dispose();
     }//GEN-LAST:event_addClientBtnMouseClicked
+
+    private void eliminarClienteBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_eliminarClienteBtnMouseClicked
+        // TODO add your handling code here:
+        int row = tablaClientes.getSelectedRow();
+        if (row != -1){
+            int confirmation = JOptionPane.showConfirmDialog(null, "Esta apunto de eliminar al cliente " + tablaClientes.getValueAt(row, 1).toString() + ", ¿desea continuar?");
+             if (confirmation == 0){
+                try {
+                    ClientUtils.RemoveClient(tablaClientes.getValueAt(row, 0).toString());
+                    CargarDatos();
+                } catch (IOException ex) {
+                    JOptionPane.showMessageDialog(null, "Error al eliminar el cliente");
+                }
+            }
+        }
+        else JOptionPane.showMessageDialog(null, "Seleccione un fila");
+    }//GEN-LAST:event_eliminarClienteBtnMouseClicked
 
     /**
      * @param args the command line arguments
@@ -330,6 +368,7 @@ public class Clients extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel Header1;
     private javax.swing.JLabel addClientBtn;
+    private javax.swing.JLabel eliminarClienteBtn;
     private javax.swing.JLabel exitBtn;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
